@@ -47,8 +47,14 @@ docker run -d \
   -e PORT=3000 \
   -e SECRET_ACCOUNT_USER1=your-secret-key-here \
   -e UPLOAD_DIR=/app/data \
+  --restart unless-stopped \
   sugarjl/image-uploader
 ```
+通过修改`SECRET_ACCOUNT_XXX`的值来设置秘钥 比如
+```sh
+  -e SECRET_ACCOUNT_HELLO=a123456 \
+```
+
 
 ### pm2
 ```sh
