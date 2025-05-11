@@ -44,6 +44,9 @@ wait a moment
 # 拉代码
 git clone https://github.com/ATQQ/image-uploader.git
 
+# Gitee 地址（Github 访问不通畅）
+git clone https://gitee.com/sugarjl/image-uploader.git
+
 cd image-uploader
 
 # 装依赖
