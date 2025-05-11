@@ -9,9 +9,12 @@
 </p>
 
 体验地址：https://imageupload.test.sugarat.top
+* https://image-uploader.sugarat.top/images/sugar/theme.png
+* https://image-uploader.sugarat.top/images/sugar/network.png
 
 秘钥：`testpwd`，`test02`   (不定期清理测试上传的图片)
 
+*可在上传时修改图片名，以覆盖过期图片*
 ## 本地
 ### 开发预览
 ```sh
