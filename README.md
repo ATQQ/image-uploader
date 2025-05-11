@@ -1,0 +1,63 @@
+# 动态图片上传
+
+适用于群微信群二维码等需要动态更新链接图片内容的场景
+
+<p align="center"><img src="Snipaste_2025-05-11_11-07-15.png" style="width:240"/></p>
+
+*借助 [Bolt](https://bolt.new/) 生成的第一版，基于 [Nuxt](https://nuxt.com/)*
+
+## 本地
+### 开发预览
+```sh
+npm install
+
+npm run dev
+```
+
+默认秘钥`testpwd`
+
+### 构建预览
+```sh
+npm install
+
+npm run build
+
+# 将默认读取 .env 中配置的秘钥
+npm run preview
+
+# 或者 手动通过环境变量指定秘钥启动
+SECRET_ACCOUNT_USER1=testpwd node .output/server/index.mjs
+```
+
+## 部署
+### docker
+wait a moment
+
+### pm2
+```sh
+# 拉代码
+git clone https://github.com/ATQQ/image-uploader.git
+# 装依赖
+npm install
+# 构建
+npm run build
+
+# 启动
+# 在 ecosystem.config.cjs env中添加或修改秘钥
+pm2 start ecosystem.config.cjs
+# 或者 启动时通过环境变量指定秘钥
+SECRET_ACCOUNT_USER1=test pm2 start ecosystem.config.cjs
+```
+
+## FAQ
+### 1 秘钥说明
+
+以`SECRET_ACCOUNT_`开头的环境变量即视为秘钥的账户名
+```sh
+SECRET_ACCOUNT_USER1=testpwd
+SECRET_ACCOUNT_SUGAR=test02
+```
+秘钥值可以通过 node 脚本随机自动生成☺️
+```js
+Math.random().toString(36).slice(2)
+```
