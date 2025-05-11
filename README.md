@@ -1,6 +1,6 @@
 # 动态图片上传
 
-<p align="center">适用于群微信群二维码等需要动态更新链接图片内容的场景></p>
+<p align="center">适用于群微信群二维码等需要动态更新链接图片内容的场景</p>
 
 <p align="center"><img src="Snipaste_2025-05-11_11-07-15.png" style="width:300px"/></p>
 
