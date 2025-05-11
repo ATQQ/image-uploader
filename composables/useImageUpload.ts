@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue';
-import imageCompression from 'browser-image-compression';
+// import imageCompression from 'browser-image-compression';
 
 export function useImageUpload() {
   const selectedFiles = ref([]);
@@ -46,16 +46,16 @@ export function useImageUpload() {
   };
   
   // Compress image
-  const compressImage = async (file, options = {}) => {
-    const defaultOptions = {
-      maxSizeMB: 1,
-      maxWidthOrHeight: 1920,
-      useWebWorker: true,
-    };
+  // const compressImage = async (file, options = {}) => {
+  //   const defaultOptions = {
+  //     maxSizeMB: 1,
+  //     maxWidthOrHeight: 1920,
+  //     useWebWorker: true,
+  //   };
     
-    const compressOptions = { ...defaultOptions, ...options };
-    return imageCompression(file, compressOptions);
-  };
+  //   const compressOptions = { ...defaultOptions, ...options };
+  //   return imageCompression(file, compressOptions);
+  // };
   
   // Format file size
   const formatFileSize = (bytes) => {
@@ -75,7 +75,7 @@ export function useImageUpload() {
     addFiles,
     removeFile,
     clearFiles,
-    compressImage,
+    // compressImage,
     formatFileSize
   };
 }

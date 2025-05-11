@@ -11,15 +11,11 @@
   },
   "dependencies": {
     "nuxt": "^3.13.0",
-    "browser-image-compression": "^2.0.2",
-    "@pinia/nuxt": "^0.5.1",
-    "pinia": "^2.1.7",
     "uuid": "^9.0.1",
-    "@vueuse/core": "^10.7.2",
-    "vue-toastification": "^2.0.0-rc.5"
+    "vue-toastification": "^2.0.0-rc.5",
+    "@nuxtjs/tailwindcss": "^6.11.0"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^6.11.0",
     "@types/uuid": "^9.0.7"
   }
 }
