@@ -8,7 +8,7 @@ export function getClientIp(req: any): string {
 
 export default defineEventHandler(async (event) => {
     const startTime = Date.now()
-    const ip = getRequestIP(event) || getClientIp(event.node.req)
+    const ip =  getClientIp(event.node.req) || getRequestIP(event)
     const method = event.method
     const path = decodeURIComponent(event.path)
     const userAgent = getRequestHeader(event, 'user-agent')
