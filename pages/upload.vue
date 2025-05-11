@@ -118,7 +118,7 @@
 <script setup>
 import IconCopy from '@/components/icons/IconCopy.vue';
 import IconTrash from '@/components/icons/IconTrash.vue';
-import IconEye from '@/components/icons/IconEye.vue';
+import IconEye from '@/components/icons/icon-eye.vue';
 import { useToast } from "vue-toastification";
 const toast = useToast();
 
