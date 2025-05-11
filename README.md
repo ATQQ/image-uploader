@@ -39,6 +39,9 @@ wait a moment
 ```sh
 # 拉代码
 git clone https://github.com/ATQQ/image-uploader.git
+
+cd image-uploader
+
 # 装依赖
 npm install
 # 构建
