@@ -66,3 +66,10 @@ SECRET_ACCOUNT_SUGAR=test02
 ```js
 Math.random().toString(36).slice(2)
 ```
+
+### 2 启动端口
+
+通过环境变量 `PORT` 控制
+```sh
+PORT=3000
+```

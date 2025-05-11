@@ -12,7 +12,7 @@ module.exports = {
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'production',
-      PORT: 3000,
+      // PORT: 3000,
       // SECRET_ACCOUNT_USER1: 'testpwd',
       // SECRET_ACCOUNT_SUGAR: 'test02'
     }
