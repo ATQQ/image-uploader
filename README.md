@@ -8,6 +8,10 @@
  <i> 基于 <a target="_blank" rel="noopener noreferrer" href="https://nuxt.com/">Nuxt</a> 借助 <a target="_blank" rel="noopener noreferrer" href="https://bolt.new/">Bolt</a>生成的第一版后微调（AI NB）</i>
 </p>
 
+体验地址：https://imageupload.test.sugarat.top
+
+秘钥：`testpwd`，`test02`   (不定期清理测试上传的图片)
+
 ## 本地
 ### 开发预览
 ```sh

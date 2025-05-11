@@ -20,6 +20,12 @@
                 Upload
               </NuxtLink>
             </li>
+            <!-- GITHUB -->
+            <li>
+              <a target="_blank" rel="noopener noreferrer" href="https://github.com/ATQQ/image-uploader/tree/main" class="text-neutral-700 hover:text-primary-500 transition-colors">
+                GitHub
+              </a>
+            </li>
           </ul>
         </nav>
       </div>
