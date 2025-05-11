@@ -1,10 +1,12 @@
 # 动态图片上传
 
-适用于群微信群二维码等需要动态更新链接图片内容的场景
+<p align="center">适用于群微信群二维码等需要动态更新链接图片内容的场景></p>
 
-<p align="center"><img src="Snipaste_2025-05-11_11-07-15.png" style="width:240"/></p>
+<p align="center"><img src="Snipaste_2025-05-11_11-07-15.png" style="width:300px"/></p>
 
-*借助 [Bolt](https://bolt.new/) 生成的第一版，基于 [Nuxt](https://nuxt.com/)*
+<p align="center">
+ <i> 基于 <a target="_blank" rel="noopener noreferrer" href="https://nuxt.com/">Nuxt</a> 借助 <a target="_blank" rel="noopener noreferrer" href="https://bolt.new/">Bolt</a>生成的第一版后微调（AI NB）</i>
+</p>
 
 ## 本地
 ### 开发预览
