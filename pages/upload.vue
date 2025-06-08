@@ -119,6 +119,8 @@
 import IconCopy from '@/components/icons/IconCopy.vue';
 import IconTrash from '@/components/icons/IconTrash.vue';
 import IconEye from '@/components/icons/icon-eye.vue';
+import IconUpload from '@/components/icons/IconUpload.vue';
+import IconCheck from '@/components/icons/IconCheck.vue';
 import { useToast } from "vue-toastification";
 const toast = useToast();
 
@@ -142,15 +144,15 @@ const fileInput = ref(null);
 
 // Load uploaded images and check authentication on client-side only
 onMounted(() => {
-  if (process.client) {
+  if (import.meta.client) {
     const savedImages = localStorage.getItem('uploadedImages');
     if (savedImages) {
       uploadedImages.value = JSON.parse(savedImages);
     }
 
-    // Check if key is stored in sessionStorage
-    const storedKey = sessionStorage.getItem('secretKey');
-    const storedAccountName = sessionStorage.getItem('accountName');
+    // Check if key is stored in localStorage
+    const storedKey = localStorage.getItem('secretKey');
+    const storedAccountName = localStorage.getItem('accountName');
     if (storedKey && storedAccountName) {
       secretKey.value = storedKey;
       auth.value = {
@@ -186,10 +188,10 @@ const authenticate = async () => {
         accountName: response.accountName
       };
 
-      // Store in sessionStorage
-      if (process.client) {
-        sessionStorage.setItem('secretKey', secretKey.value);
-        sessionStorage.setItem('accountName', response.accountName);
+      // Store in localStorage
+      if (import.meta.client) {
+        localStorage.setItem('secretKey', secretKey.value);
+        localStorage.setItem('accountName', response.accountName);
       }
 
       toast.success(`Authenticated as ${response.accountName}`);
@@ -213,9 +215,9 @@ const logout = () => {
   };
   secretKey.value = '';
 
-  if (process.client) {
-    sessionStorage.removeItem('secretKey');
-    sessionStorage.removeItem('accountName');
+  if (import.meta.client) {
+    localStorage.removeItem('secretKey');
+    localStorage.removeItem('accountName');
   }
 
   toast.info('Logged out successfully');

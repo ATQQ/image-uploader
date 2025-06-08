@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware((to, from) => {
   // Skip middleware on server
-  if (process.server) return;
+  if (import.meta.server) return;
   
   // Skip middleware for non-protected routes
   if (to.path !== '/upload') return;

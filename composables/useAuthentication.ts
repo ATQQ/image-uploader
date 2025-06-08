@@ -8,9 +8,9 @@ export function useAuthentication() {
   
   // Check if authenticated from session storage
   const checkAuth = () => {
-    if (process.client) {
-      const storedKey = sessionStorage.getItem('secretKey');
-      const storedAccountName = sessionStorage.getItem('accountName');
+    if (import.meta.client) {
+      const storedKey = localStorage.getItem('secretKey');
+      const storedAccountName = localStorage.getItem('accountName');
       
       if (storedKey && storedAccountName) {
         secretKey.value = storedKey;
@@ -47,10 +47,10 @@ export function useAuthentication() {
         isAuthenticated.value = true;
         accountName.value = response.accountName;
         
-        // Store in sessionStorage
-        if (process.client) {
-          sessionStorage.setItem('secretKey', key);
-          sessionStorage.setItem('accountName', response.accountName);
+        // Store in localStorage
+        if (import.meta.client) {
+          localStorage.setItem('secretKey', key);
+          localStorage.setItem('accountName', response.accountName);
         }
         
         return {
@@ -80,9 +80,9 @@ export function useAuthentication() {
     secretKey.value = '';
     accountName.value = '';
     
-    if (process.client) {
-      sessionStorage.removeItem('secretKey');
-      sessionStorage.removeItem('accountName');
+    if (import.meta.client) {
+      localStorage.removeItem('secretKey');
+      localStorage.removeItem('accountName');
     }
     
     return true;
