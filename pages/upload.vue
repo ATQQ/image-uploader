@@ -61,8 +61,8 @@
         <div class="space-y-3">
           <div v-for="(file, index) in selectedFiles" :key="index"
             class="flex items-center gap-3 p-3 bg-neutral-50 rounded-lg">
-            <div class="w-12 h-12 rounded-lg bg-cover bg-center bg-neutral-200"
-              :style="{ backgroundImage: `url(${file.preview})` }"></div>
+            <div class="w-12 h-12 rounded-lg bg-cover bg-center bg-neutral-200 cursor-pointer"
+              :style="{ backgroundImage: `url(${file.preview})` }" @click="openImagePreview(file.preview)"></div>
             <div class="flex-grow">
               <div class="flex items-center gap-2">
                 <input v-model="file.customName" class="input text-sm py-1" placeholder="Custom filename (optional)" />
@@ -95,8 +95,9 @@
       <div class="space-y-4">
         <div v-for="(image, index) in uploadedImages" :key="index" class="p-4 bg-neutral-50 rounded-lg">
           <div class="flex items-center gap-4">
-            <div class="w-16 h-16 rounded-lg bg-cover bg-center"
-              :style="{ backgroundImage: `url(${wrapperUrl(image.url)})` }">
+            <div class="w-16 h-16 rounded-lg bg-cover bg-center cursor-pointer"
+              :style="{ backgroundImage: `url(${wrapperUrl(image.url)})` }"
+              @click="openImagePreview(image.url)">
             </div>
             <div class="flex-grow">
               <div class="text-sm font-medium mb-1">{{ image.name }}</div>
@@ -130,8 +131,12 @@
         </div>
       </div>
     </div>
+
     <!-- 添加隐藏的文件输入框用于重新上传 -->
     <input ref="reuploadInput" type="file" accept="image/*" class="hidden" @change="handleReuploadSelect" />
+    
+    <!-- 图片预览组件 -->
+    <ImagePreview :is-open="previewOpen" :image-url="previewImageUrl" @close="closeImagePreview" />
   </div>
 </template>
 
@@ -142,6 +147,7 @@ import IconEye from '@/components/icons/icon-eye.vue';
 import IconEyeOff from '@/components/icons/icon-eye-off.vue';
 import IconUpload from '@/components/icons/IconUpload.vue';
 import IconCheck from '@/components/icons/IconCheck.vue';
+import ImagePreview from '@/components/ImagePreview.vue';
 import { useToast } from "vue-toastification";
 const toast = useToast();
 
@@ -242,6 +248,7 @@ const authenticate = async () => {
       }
 
       toast.success(`Authenticated as ${response.accountName}`);
+      getUploadedImages()
     } else {
       toast.error('Invalid secret key');
     }
@@ -471,6 +478,21 @@ const openPreview = (url) => {
 
 // 当前正在重新上传的图片索引
 const reuploadingIndex = ref(-1);
+
+// 图片预览状态
+const previewOpen = ref(false);
+const previewImageUrl = ref('');
+
+// 打开图片预览
+const openImagePreview = (url) => {
+  previewImageUrl.value = wrapperUrl(url);
+  previewOpen.value = true;
+};
+
+// 关闭图片预览
+const closeImagePreview = () => {
+  previewOpen.value = false;
+};
 
 // 触发重新上传文件选择
 const reuploadImage = (index) => {
