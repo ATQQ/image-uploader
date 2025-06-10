@@ -7,8 +7,17 @@
 
       <div class="mb-6">
         <label for="secretKey" class="block mb-2 text-neutral-700">Secret Key</label>
-        <input id="secretKey" v-model="secretKey" type="password" class="input" placeholder="Enter your secret key"
-          :disabled="isAuthenticated" />
+        <div class="relative">
+          <input v-if="!showPassword" id="secretKey" v-model="secretKey" type="password" class="input pr-10"
+            placeholder="Enter your secret key" :disabled="isAuthenticated" />
+          <input v-else id="secretKey" v-model="secretKey" type="text" class="input pr-10"
+            placeholder="Enter your secret key" :disabled="isAuthenticated" />
+          <button @click="showPassword = !showPassword" type="button"
+            class="absolute inset-y-0 right-0 flex items-center px-3 text-neutral-500 hover:text-neutral-700">
+            <IconEye v-if="!showPassword" class="w-5 h-5" />
+            <IconEyeOff v-else class="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
       <div v-if="!isAuthenticated" class="flex justify-end">
@@ -90,20 +99,28 @@
               :style="{ backgroundImage: `url(${wrapperUrl(image.url)})` }">
             </div>
             <div class="flex-grow">
-              <div class="text-sm font-medium mb-1">{{ getImageName(image.url) }}</div>
-              <div class="flex items-center gap-2">
-                <input type="text" readonly :value="image.url" class="input text-sm py-1 flex-grow" />
-                <button @click="copyToClipboard(image.url)" class="btn-secondary p-2">
-                  <IconCopy class="w-5 h-5" />
-                </button>
-                <!-- 删除按钮 -->
-                <button @click="removeImage(index)" class="btn-secondary p-2">
-                  <IconTrash class="w-5 h-5" />
-                </button>
-                <!-- 预览按钮 -->
-                <button @click="openPreview(image.url)" class="btn-secondary p-2">
-                  <IconEye class="w-5 h-5" />
-                </button>
+              <div class="text-sm font-medium mb-1">{{ image.name }}</div>
+              <div class="flex flex-col md:flex-row md:items-center gap-2">
+                <input type="text" readonly :value="image.url" class="input text-sm py-1 w-full" />
+                <div class="flex items-center gap-2 mt-2 md:mt-0">
+                  <button @click="copyToClipboard(image.url)" class="btn-secondary p-2">
+                    <IconCopy class="w-5 h-5" />
+                  </button>
+
+                  <!-- 重新上传按钮 -->
+                  <button @click="reuploadImage(index)" class="btn-secondary p-2">
+                    <IconUpload class="w-5 h-5" />
+                  </button>
+
+                  <!-- 删除按钮 -->
+                  <button @click="removeImage(index)" class="btn-secondary p-2">
+                    <IconTrash class="w-5 h-5" />
+                  </button>
+                  <!-- 预览按钮 -->
+                  <button @click="openPreview(image.url)" class="btn-secondary p-2">
+                    <IconEye class="w-5 h-5" />
+                  </button>
+                </div>
               </div>
               <!-- 展示上传时间 -->
               <div class="text-xs text-neutral-500 mt-1">{{ new Date(image.uploadedAt).toLocaleString() || 'Unknown' }}
@@ -113,6 +130,8 @@
         </div>
       </div>
     </div>
+    <!-- 添加隐藏的文件输入框用于重新上传 -->
+    <input ref="reuploadInput" type="file" accept="image/*" class="hidden" @change="handleReuploadSelect" />
   </div>
 </template>
 
@@ -120,6 +139,7 @@
 import IconCopy from '@/components/icons/IconCopy.vue';
 import IconTrash from '@/components/icons/IconTrash.vue';
 import IconEye from '@/components/icons/icon-eye.vue';
+import IconEyeOff from '@/components/icons/icon-eye-off.vue';
 import IconUpload from '@/components/icons/IconUpload.vue';
 import IconCheck from '@/components/icons/IconCheck.vue';
 import { useToast } from "vue-toastification";
@@ -135,6 +155,7 @@ const secretKey = ref('');
 const isAuthenticated = computed(() => auth.value.isAuthenticated);
 const isAuthenticating = ref(false);
 const accountName = computed(() => auth.value.accountName);
+const showPassword = ref(false);
 
 // Upload state
 const selectedFiles = ref([]);
@@ -142,7 +163,27 @@ const isDragging = ref(false);
 const isUploading = ref(false);
 const uploadedImages = ref([]);
 const fileInput = ref(null);
+const reuploadInput = ref(null);
 
+const getUploadedImages = async () => {
+  try {
+    const response = await $fetch('/api/images/list', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${auth.value.secretKey}`
+      }
+    });
+
+    if (response.success) {
+      uploadedImages.value = response.images;
+      // 更新本地存储
+      localStorage.setItem('uploadedImages', JSON.stringify(response.images));
+    }
+  } catch (error) {
+    console.error('获取图片列表失败:', error);
+    toast.error('获取图片列表失败');
+  }
+}
 // Load uploaded images and check authentication on client-side only
 onMounted(async () => {
   if (import.meta.client) {
@@ -165,23 +206,7 @@ onMounted(async () => {
 
     // 如果已登录，获取用户图片
     if (auth.value.isAuthenticated) {
-      try {
-        const response = await $fetch('/api/images/list', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${auth.value.secretKey}`
-          }
-        });
-
-        if (response.success) {
-          uploadedImages.value = response.images;
-          // 更新本地存储
-          localStorage.setItem('uploadedImages', JSON.stringify(response.images));
-        }
-      } catch (error) {
-        console.error('获取图片列表失败:', error);
-        toast.error('获取图片列表失败');
-      }
+      getUploadedImages()
     }
   }
 });
@@ -400,7 +425,7 @@ const copyToClipboard = (text) => {
 
 // Get image name from URL
 const getImageName = (url) => {
-  return url.split('/').pop();
+  return new URL(url).pathname.split('/').pop();
 };
 
 const removeImage = async (index) => {
@@ -444,5 +469,77 @@ const openPreview = (url) => {
   window.open(wrapperUrl(url), '_blank');
 }
 
+// 当前正在重新上传的图片索引
+const reuploadingIndex = ref(-1);
+
+// 触发重新上传文件选择
+const reuploadImage = (index) => {
+  reuploadingIndex.value = index;
+  reuploadInput.value.click();
+};
+
+// 处理重新上传文件选择
+const handleReuploadSelect = async (event) => {
+  const files = Array.from(event.target.files);
+  if (files.length === 0) {
+    reuploadingIndex.value = -1;
+    return;
+  }
+
+  const file = files[0];
+  if (!file.type.startsWith('image/')) {
+    toast.warning(`${file.name} 不是图片文件`);
+    reuploadingIndex.value = -1;
+    event.target.value = '';
+    return;
+  }
+
+  // 获取要覆盖的图片信息
+  const imageToReplace = uploadedImages.value[reuploadingIndex.value];
+  const imageName = getImageName(imageToReplace.url);
+
+  isUploading.value = true;
+
+  try {
+    // 创建表单数据
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('secretKey', secretKey.value);
+    formData.append('customName', imageName);
+
+    // 上传
+    const response = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      const target = uploadedImages.value[reuploadingIndex.value]
+      const newUrl = new URL(result.url)
+      newUrl.searchParams.delete('t')
+      newUrl.searchParams.set('t', new Date().getTime().toString())
+      // 更新已上传图片列表
+      Object.assign(target, {
+        url: newUrl.toString(),
+        name: result.filename,
+        uploadedAt: new Date().toISOString()
+      })
+      // 保存到本地存储
+      localStorage.setItem('uploadedImages', JSON.stringify(uploadedImages.value));
+      toast.success(`图片重新上传成功`);
+    } else {
+      toast.error(result.message || '重新上传失败');
+    }
+  } catch (error) {
+    console.error('重新上传错误:', error);
+    toast.error('重新上传失败，请重试');
+  } finally {
+    isUploading.value = false;
+    reuploadingIndex.value = -1;
+    event.target.value = '';
+  }
+};
 
 </script>

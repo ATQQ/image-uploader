@@ -1,10 +1,10 @@
-import { defineEventHandler, getRouterParam } from 'h3'
-import { readFile } from 'fs/promises'
+import { defineEventHandler } from 'h3'
 import { join } from 'path'
 import { createReadStream, existsSync } from 'fs'
 
 export default defineEventHandler(async (event) => {
-  const path = event.node.req.url || ''
+  // 移除 URL 中的查询参数
+  const path = event.node.req.url?.split('?')[0] || ''
 
   // 只处理 /images/ 开头的请求
   if (!path.startsWith('/images/')) {
@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
     // 使用流的方式读取和发送图片，避免大图片占用内存
     const stream = createReadStream(imagePath)
     return sendStream(event, stream)
-    
+
     // 注意：使用流方式后，不再需要下面的 readFile 和 return imageBuffer 代码
     // 因此，请删除或注释掉下面两行代码
     // const imageBuffer = await readFile(imagePath)
