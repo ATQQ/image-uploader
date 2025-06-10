@@ -26,11 +26,14 @@ export default defineEventHandler(async (event) => {
     const origin = getHeader(event, 'origin') || new URL(getHeader(event, 'referer')!).origin;
 
     // 只返回图片文件（可根据实际情况过滤）
-    const images = files.map(file => ({
+    const images = await Promise.all(files.map(async file => ({
       url: `${origin}/images/${accountName}/${file}`,
       name: file,
-      uploadedAt: null // 如有时间戳可补充
-    }));
+      uploadedAt: (await fs.stat(join(uploadDir, file))).mtime.toISOString() // 使用文件的修改时间作为上传时间
+    })));
+
+    // 按上传时间倒序排序
+    images.sort((a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime());
 
     return {
       success: true,
