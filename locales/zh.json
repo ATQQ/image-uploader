@@ -1,0 +1,53 @@
+{
+  "title": "图片上传",
+  "auth": {
+    "title": "身份验证",
+    "secretKey": "密钥",
+    "placeholder": "请输入您的密钥",
+    "authenticate": "验证",
+    "authenticating": "验证中...",
+    "authenticated": "已验证为",
+    "logout": "退出登录",
+    "invalidKey": "无效的密钥",
+    "authFailed": "验证失败，请重试",
+    "loggedOut": "已成功退出登录"
+  },
+  "upload": {
+    "title": "上传图片",
+    "dragDrop": "拖拽图片到此处",
+    "clickBrowse": "或点击浏览",
+    "selectedImages": "已选择的图片",
+    "clearAll": "清空全部",
+    "customFilename": "自定义文件名（可选）",
+    "uploadButton": "上传",
+    "uploading": "上传中...",
+    "image": "张图片",
+    "images": "张图片",
+    "uploadSuccess": "图片上传成功",
+    "uploadFailed": "上传失败",
+    "reuploadSuccess": "图片重新上传成功",
+    "reuploadFailed": "重新上传失败",
+    "selectAtLeastOne": "请至少选择一张图片",
+    "notImageFile": "不是图片文件",
+    "dropImagesOnly": "请只拖拽图片文件"
+  },
+  "uploaded": {
+    "title": "已上传的图片",
+    "copySuccess": "链接已复制到剪贴板",
+    "copyFailed": "复制链接失败",
+    "clipboardNotSupported": "不支持剪贴板API",
+    "deleteConfirm": "确定要删除这张图片吗？此操作不可撤销。",
+    "deleteSuccess": "图片删除成功",
+    "deleteFailed": "删除失败",
+    "getImagesFailed": "获取图片列表失败"
+  },
+  "common": {
+    "language": "语言",
+    "theme": "主题",
+    "light": "浅色",
+    "dark": "深色",
+    "system": "跟随系统",
+    "chinese": "中文",
+    "english": "English"
+  }
+}
