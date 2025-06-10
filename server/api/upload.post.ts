@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
     const customName = customNameField ? Buffer.from(customNameField.data).toString('utf8') : null;
     
     // Determine file extension
-    const fileExtension = extname(imageField.filename).toLowerCase();
+    const fileExtension = extname(imageField.filename!).toLowerCase();
     const validExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
     if (!validExtensions.includes(fileExtension)) {
       return {
@@ -82,6 +82,7 @@ export default defineEventHandler(async (event) => {
         message: 'Failed to create upload directory'
       };
     }
+    const config = useRuntimeConfig();
     
     // Write file
     const filePath = join(uploadDir, filename);

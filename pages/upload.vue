@@ -86,7 +86,8 @@
       <div class="space-y-4">
         <div v-for="(image, index) in uploadedImages" :key="index" class="p-4 bg-neutral-50 rounded-lg">
           <div class="flex items-center gap-4">
-            <div class="w-16 h-16 rounded-lg bg-cover bg-center" :style="{ backgroundImage: `url(${wrapperUrl(image.url)})` }">
+            <div class="w-16 h-16 rounded-lg bg-cover bg-center"
+              :style="{ backgroundImage: `url(${wrapperUrl(image.url)})` }">
             </div>
             <div class="flex-grow">
               <div class="text-sm font-medium mb-1">{{ getImageName(image.url) }}</div>
@@ -143,7 +144,7 @@ const uploadedImages = ref([]);
 const fileInput = ref(null);
 
 // Load uploaded images and check authentication on client-side only
-onMounted(() => {
+onMounted(async () => {
   if (import.meta.client) {
     const savedImages = localStorage.getItem('uploadedImages');
     if (savedImages) {
@@ -160,6 +161,27 @@ onMounted(() => {
         secretKey: storedKey,
         accountName: storedAccountName
       };
+    }
+
+    // 如果已登录，获取用户图片
+    if (auth.value.isAuthenticated) {
+      try {
+        const response = await $fetch('/api/images/list', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${auth.value.secretKey}`
+          }
+        });
+
+        if (response.success) {
+          uploadedImages.value = response.images;
+          // 更新本地存储
+          localStorage.setItem('uploadedImages', JSON.stringify(response.images));
+        }
+      } catch (error) {
+        console.error('获取图片列表失败:', error);
+        toast.error('获取图片列表失败');
+      }
     }
   }
 });
