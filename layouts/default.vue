@@ -38,7 +38,7 @@
         </nav>
 
         <!-- 右侧控制区域 -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center">
           <!-- 语言和主题切换组件 -->
           <LanguageThemeToggle />
           

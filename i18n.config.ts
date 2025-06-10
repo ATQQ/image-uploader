@@ -38,9 +38,9 @@ export default {
         preview: 'Preview',
         language: 'Language',
         theme: 'Theme',
-        system: '☀️',
-        light: 'Light',
-        dark: 'Dark',
+        system: '',
+        light: '',
+        dark: '',
         tagline: 'Secure Image Uploading',
         footer: 'Secure Image Uploading'
       },
@@ -99,11 +99,11 @@ export default {
         preview: '预览',
         language: '语言',
         theme: '主题',
-        system: '☀️',
-        light: '浅色',
-        dark: '深色',
-        tagline: '安全图片上传',
-        footer: '安全图片上传'
+        system: '',
+        light: '',
+        dark: '',
+        tagline: '图片上传',
+        footer: '图片上传'
       },
       nav: {
         home: '首页',
@@ -117,7 +117,7 @@ export default {
         enterKey: '输入您的密钥并立即开始上传图片。',
         goToUpload: '前往上传页面'
       },
-      title: '安全图片上传与分享'
+      title: '图片上传与分享'
     }
   }
 }

@@ -2,10 +2,10 @@
   <section class="py-16 px-4">
     <div class="container mx-auto max-w-4xl">
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold mb-4 text-neutral-900">
+        <h1 class="text-4xl font-bold mb-4 text-neutral-900 dark:text-white">
           {{ t('title') }}
         </h1>
-        <p class="text-xl text-neutral-700 max-w-2xl mx-auto">
+        <p class="text-xl text-neutral-700 dark:text-gray-300 max-w-2xl mx-auto">
           {{ t('common.tagline') }}
         </p>
       </div>
