@@ -48,9 +48,6 @@ docker run -d \
   --name image-uploader \
   -p 3000:3000 \
   -v $(pwd)/data:/app/data \
-  -e NODE_ENV=production \
-  -e HOST=0.0.0.0 \
-  -e PORT=3000 \
   -e SECRET_ACCOUNT_USER1=your-secret-key-here \
   --restart unless-stopped \
   sugarjl/image-uploader

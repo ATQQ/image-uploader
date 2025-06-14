@@ -17,6 +17,15 @@ error() {
     echo -e "${RED}[ERROR] $1${NC}"
 }
 
+# 处理命令行参数
+TAG="latest"
+if [ $# -ge 1 ]; then
+    TAG="$1"
+    info "使用自定义标签: $TAG"
+else
+    info "未指定标签，使用默认标签: $TAG"
+fi
+
 # 检查 docker 命令是否存在
 if ! command -v docker &> /dev/null; then
     error "docker 命令未找到，请先安装 docker"
@@ -35,8 +44,8 @@ docker buildx inspect --bootstrap
 info "开始构建多平台镜像..."
 docker buildx build \
     --platform linux/amd64,linux/arm64 \
-    --tag sugarjl/image-uploader:latest \
+    --tag sugarjl/image-uploader:$TAG \
     --push \
     .
 
-info "构建完成！" 
+info "构建完成！标签: $TAG"
