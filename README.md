@@ -2,7 +2,7 @@
 
 <p align="center">适用于群微信群二维码等需要动态更新链接图片内容的场景</p>
 
-<p align="center"><img src="Snipaste_2025-05-11_11-07-15.png" style="width:300px"/></p>
+<p align="center"><img src="Snipaste_2025-06-14_16-43-16.png" style="width:300px"/></p>
 
 <p align="center">
  <i> 基于 <a target="_blank" rel="noopener noreferrer" href="https://nuxt.com/">Nuxt</a> 借助 <a target="_blank" rel="noopener noreferrer" href="https://bolt.new/">Bolt</a>生成的第一版后微调（AI NB）</i>
@@ -17,6 +17,13 @@
 *可在上传时修改图片名，以覆盖过期图片*
 
 [查看更新日志](CHANGELOG.md)
+
+
+## 特性
+1. 多账户支持
+2. 页面支持中英文切换
+3. 图片上传后可自定义图片名
+4. 支持直接覆盖上传
 
 ## 本地
 ### 开发预览
