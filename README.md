@@ -55,8 +55,9 @@ docker run -d \
 通过修改`SECRET_ACCOUNT_XXX`的值来设置秘钥 比如
 ```sh
   -e SECRET_ACCOUNT_HELLO=a123456 \
+  -e SECRET_ACCOUNT_USER2=a123456 \
 ```
-
+可同时设置多个账户秘钥
 
 ### pm2
 ```sh
