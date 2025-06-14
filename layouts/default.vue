@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col bg-neutral-50 dark:bg-gray-900">
-    
+
     <header class="border-b border-neutral-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
       <div class="container mx-auto px-4 py-3 flex justify-between items-center">
         <!-- Logo 区域 -->
@@ -20,17 +20,20 @@
         <nav class="hidden md:block">
           <ul class="flex space-x-6">
             <li>
-              <NuxtLink :to="localePath('/')" class="text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
+              <NuxtLink :to="localePath('/')"
+                class="text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
                 {{ t('nav.home') }}
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink :to="localePath('/upload')" class="text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
+              <NuxtLink :to="localePath('/upload')"
+                class="text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
                 {{ t('nav.upload') }}
               </NuxtLink>
             </li>
             <li>
-              <a target="_blank" rel="noopener noreferrer" href="https://github.com/ATQQ/image-uploader/tree/main" class="text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
+              <a target="_blank" rel="noopener noreferrer" href="https://github.com/ATQQ/image-uploader/tree/main"
+                class="text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
                 GitHub
               </a>
             </li>
@@ -41,9 +44,10 @@
         <div class="flex items-center">
           <!-- 语言和主题切换组件 -->
           <LanguageThemeToggle />
-          
+
           <!-- 移动端菜单按钮 -->
-          <button @click="toggleMobileMenu" class="md:hidden p-2 text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
+          <button @click="toggleMobileMenu"
+            class="md:hidden p-2 text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
@@ -52,21 +56,26 @@
       </div>
 
       <!-- 移动端菜单 -->
-      <div v-if="showMobileMenu" class="md:hidden border-t border-neutral-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+      <div v-if="showMobileMenu"
+        class="md:hidden border-t border-neutral-200 dark:border-gray-700 bg-white dark:bg-gray-800">
         <nav class="px-4 py-3">
           <ul class="space-y-2">
             <li>
-              <NuxtLink @click="closeMobileMenu" :to="localePath('/')" class="block py-2 text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
+              <NuxtLink @click="closeMobileMenu" :to="localePath('/')"
+                class="block py-2 text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
                 {{ t('nav.home') }}
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink @click="closeMobileMenu" :to="localePath('/upload')" class="block py-2 text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
+              <NuxtLink @click="closeMobileMenu" :to="localePath('/upload')"
+                class="block py-2 text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
                 {{ t('nav.upload') }}
               </NuxtLink>
             </li>
             <li>
-              <a @click="closeMobileMenu" target="_blank" rel="noopener noreferrer" href="https://github.com/ATQQ/image-uploader/tree/main" class="block py-2 text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
+              <a @click="closeMobileMenu" target="_blank" rel="noopener noreferrer"
+                href="https://github.com/ATQQ/image-uploader/tree/main"
+                class="block py-2 text-neutral-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors font-medium">
                 GitHub
               </a>
             </li>
@@ -74,11 +83,11 @@
         </nav>
       </div>
     </header>
-    
+
     <main class="flex-grow">
       <slot />
     </main>
-    
+
     <footer class="bg-neutral-100 dark:bg-gray-800 border-t border-neutral-200 dark:border-gray-700 py-6">
       <div class="container mx-auto px-4 text-center text-neutral-600 dark:text-gray-400 text-sm">
         © {{ new Date().getFullYear() }} ImageUp - {{ t('common.footer') }}
@@ -104,6 +113,32 @@ const closeMobileMenu = () => {
   showMobileMenu.value = false;
 };
 
+// 检查是否首次访问并根据系统语言自动设置语言
+onMounted(() => {
+  const userLocale = localStorage.getItem('user-locale');
+
+  if (!userLocale) {
+    // 获取系统语言
+    const systemLanguage = navigator.language.toLowerCase();
+
+    // 如果系统语言是中文，自动跳转到中文路径
+    if (systemLanguage.includes('zh')) {
+      const router = useRouter();
+      const currentRoute = useRoute();
+      if (currentRoute.path === '/') {
+        // 将当前路由切换到中文版本
+        router.replace({
+          path: '/zh',
+        });
+      }
+    }
+
+    // 设置用户语言偏好标记，防止再次自动跳转
+    localStorage.setItem('user-locale', 'zh');
+  }
+});
+
+
 // 点击外部关闭移动端菜单
 onMounted(() => {
   const handleClickOutside = (event: Event) => {
@@ -112,9 +147,9 @@ onMounted(() => {
       showMobileMenu.value = false;
     }
   };
-  
+
   document.addEventListener('click', handleClickOutside);
-  
+
   onUnmounted(() => {
     document.removeEventListener('click', handleClickOutside);
   });

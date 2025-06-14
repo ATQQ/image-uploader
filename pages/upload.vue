@@ -102,7 +102,7 @@
             <div class="flex justify-between items-center mb-2">
               <div class="mb-2">
                 <span class="text-sm font-medium text-neutral-900 dark:text-gray-100 block mb-2 break-all">{{
-                  getImageName(image.url) }}</span>
+                  image.name }}</span>
               </div>
               <div class="flex items-center justify-end gap-1">
                 <button @click="copyToClipboard(wrapperUrl(image.url))"
@@ -450,11 +450,6 @@ const copyToClipboard = (text) => {
   }
 };
 
-// Get image name from URL
-const getImageName = (url) => {
-  return new URL(url).pathname.split('/').pop();
-};
-
 const removeImage = async (index) => {
   // 添加确认弹窗
   if (!confirm('确定要删除这张图片吗？此操作不可撤销。')) {
@@ -465,7 +460,7 @@ const removeImage = async (index) => {
   // Create form data
   const formData = new FormData();
   formData.append('secretKey', secretKey.value);
-  formData.append('customName', getImageName(fileObj.url));
+  formData.append('customName', fileObj.name);
 
   // Upload
   const response = await fetch('/api/upload', {
@@ -539,7 +534,7 @@ const handleReuploadSelect = async (event) => {
   // 获取要覆盖的图片信息
   const imageToReplace = uploadedImages.value[reuploadingIndex.value];
   
-  const imageName = getImageName(imageToReplace.url);
+  const imageName = imageToReplace.name;
 
   isUploading.value = true;
 

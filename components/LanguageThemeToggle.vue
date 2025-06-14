@@ -82,7 +82,7 @@
 </template>
 
 <script setup>
-const { locale, locales, setLocale, t } = useI18n()
+const { locale, setLocale, t } = useI18n()
 const colorMode = useColorMode()
 
 // 从localStorage中获取保存的语言设置，如果没有则使用当前语言
