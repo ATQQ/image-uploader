@@ -64,7 +64,17 @@ docker run -d \
   -e SECRET_ACCOUNT_HELLO=a123456 \
   -e SECRET_ACCOUNT_USER2=a123456 \
 ```
-可同时设置多个账户秘钥
+可同时设置多个账户秘钥，比如：
+```sh
+docker run -d \
+  --name image-uploader-test \
+  -p 4001:3000 \
+  -v $(pwd)/data:/app/data \
+  -e SECRET_ACCOUNT_sugar=test02 \
+  -e SECRET_ACCOUNT_user1=testpwd \
+  --restart unless-stopped \
+  sugarjl/image-uploader
+```
 
 ### pm2
 ```sh
